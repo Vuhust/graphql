@@ -1,39 +1,21 @@
 package com.example.graphql.controller;
 
-import com.example.graphql.entity.Book;
-import com.example.graphql.repository.BookRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.List;
+import com.example.graphql.bookDetails.*;
+import org.springframework.graphql.data.method.annotation.*;
+import org.springframework.stereotype.Controller;
 
-@RestController
-@RequestMapping("/api/book")
-@AllArgsConstructor
-public class BookController {
+@Controller
+class BookController {
 
-    private final BookRepository repository;
-
-
-    @GetMapping("/{id}")
-    public Book findById(@PathVariable long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException());
+    @QueryMapping
+    public Book bookById(@Argument String id) {
+        return Book.getById(id);
     }
 
-    @GetMapping("/")
-    public Collection<Book> findBooks() {
-        return repository.findAll();
+    @SchemaMapping
+    public Author author(Book book) {
+        return Author.getById(book.authorId());
     }
 
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Book updateBook(
-            @PathVariable("id") final String id, @RequestBody final Book book) {
-        return book;
-    }
 }
