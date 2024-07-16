@@ -1,25 +1,30 @@
 package com.example.graphql.entity;
 
 
+
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
 @Entity
 @Getter
 @Setter
-public class Book {
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "my_user")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "'name'")
     private String name;
 
-    private String author;
-
-    @ManyToOne(cascade =  {CascadeType.ALL, CascadeType.PERSIST, CascadeType.MERGE})
-    private Author authorObject;
+    @Column(name = "addr")
+    private String address;
 
 }

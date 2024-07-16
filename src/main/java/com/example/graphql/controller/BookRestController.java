@@ -1,13 +1,19 @@
 package com.example.graphql.controller;
 
 import com.example.graphql.entity.Book;
+import com.example.graphql.entity.Book2;
+import com.example.graphql.entity.Group;
+import com.example.graphql.entity.bookInterface;
 import com.example.graphql.repository.AuthorRepository;
 import com.example.graphql.repository.BookRepository;
+import com.example.graphql.repository.GroupRepo;
+import com.example.graphql.repository.UserRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/book")
@@ -36,19 +42,47 @@ public class BookRestController {
         return book;
     }
 
-    @GetMapping("/test")
+    @GetMapping("/testnative")
     @ResponseStatus(HttpStatus.OK)
     public Object updateBasook() {
-        return bookRepository.getAllByAuthor("a");
+
+        List<bookInterface> book2 = bookRepository.nativeQuery("1");
+//        book2.getFirst().setId(1);
+        return book2
+        ;
     }
 
 
     @GetMapping("/testadd")
     @ResponseStatus(HttpStatus.OK)
     public Object updassteBasook() {
+        bookRepository.save(new Book());
 
-
-        return bookRepository.getAllByAuthor("a");
+//        return bookRepository.getAllByAuthor("a");
+        return null;
     }
+
+    private final UserRepo userRepo;
+    private final GroupRepo groupRepo;
+
+    @GetMapping("/getAllUser")
+    @ResponseStatus(HttpStatus.OK)
+    public Object getallu() {
+        return userRepo.findAll();
+
+
+    }
+
+
+    @GetMapping("/getAllGroup")
+    @ResponseStatus(HttpStatus.OK)
+    public Object getallg() {
+        List<Group> groups = groupRepo.findAll();
+        return groups;
+//        return groupRepo.findAll();
+
+
+    }
+
 
 }
