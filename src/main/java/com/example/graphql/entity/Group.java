@@ -10,6 +10,7 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,15 +24,15 @@ public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "group_id")
     private Long id;
     @Column(name = "'name'")
     private String name;
     @Column(name = "'desc''")
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SELECT)
-    @BatchSize(size = 100)
-    private List<User> users;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL , mappedBy = "group")
+    @Fetch(FetchMode.JOIN)
+    private Set<User> users = new HashSet<>();
 
 }

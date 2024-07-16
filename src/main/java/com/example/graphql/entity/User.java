@@ -2,11 +2,15 @@ package com.example.graphql.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 
 @Entity
@@ -14,7 +18,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "my_user")
+@Table(name = "u")
 public class User {
 
     @Id
@@ -26,5 +30,11 @@ public class User {
 
     @Column(name = "addr")
     private String address;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @JoinColumn(name = "group_id")
+    @Fetch(FetchMode.SELECT)
+    private  Group group;
 
 }

@@ -1,9 +1,6 @@
 package com.example.graphql.controller;
 
-import com.example.graphql.entity.Book;
-import com.example.graphql.entity.Book2;
-import com.example.graphql.entity.Group;
-import com.example.graphql.entity.bookInterface;
+import com.example.graphql.entity.*;
 import com.example.graphql.repository.AuthorRepository;
 import com.example.graphql.repository.BookRepository;
 import com.example.graphql.repository.GroupRepo;
@@ -84,5 +81,24 @@ public class BookRestController {
 
     }
 
+    @GetMapping("/findByName")
+    @ResponseStatus(HttpStatus.OK)
+    public Object findbn() {
+        List<Group> groups = groupRepo.findAllByDescriptionContaining("haha");
+        return groups;
+//        return groupRepo.findAll();
 
+
+    }
+
+    @GetMapping("/findu")
+    @ResponseStatus(HttpStatus.OK)
+    public Object findu() {
+
+//        return userRepo.findAllByName("Doe", UX.class);
+//        return groupRepo.findAll();
+
+        return userRepo.findAll();
+
+    }
 }
